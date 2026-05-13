@@ -53,10 +53,23 @@ function detectEvent(body: Record<string, unknown>): string {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
+    console.log("[webhook] payload completo:", JSON.stringify(body))
 
-    const email: string = body?.customer?.email ?? body?.buyer?.email ?? body?.email ?? ""
+    const email: string =
+      body?.customer?.email ??
+      body?.buyer?.email ??
+      body?.email ??
+      body?.data?.customer?.email ??
+      body?.data?.buyer?.email ??
+      body?.sale?.customer?.email ??
+      body?.order?.customer?.email ??
+      body?.payer?.email ??
+      body?.client?.email ??
+      ""
+
     if (!email) {
-      return NextResponse.json({ error: "Email não encontrado no payload" }, { status: 400 })
+      console.log("[webhook] email não encontrado. campos recebidos:", Object.keys(body))
+      return NextResponse.json({ error: "Email não encontrado no payload", received: body }, { status: 400 })
     }
 
     const event = detectEvent(body)
