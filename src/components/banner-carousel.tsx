@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -78,7 +79,7 @@ export function BannerCarousel({ banners, autoplayMs = 5000 }: Props) {
         {extended.map((b, i) => (
           <div key={`${b.id}-${i}`} className="min-w-full h-full relative shrink-0">
             {b.image_url ? (
-              <img src={b.image_url} alt={b.title} className="w-full h-full object-cover" />
+              <Image src={b.image_url} alt={b.title} fill className="object-cover" priority={i === 0} sizes="100vw" />
             ) : (
               <div className={cn("w-full h-full bg-gradient-to-br flex flex-col items-center justify-center gap-2 select-none", b.bg_color ?? "from-neutral-800 to-neutral-900")}>
                 <p className="text-xl md:text-3xl font-bold text-white text-center px-6">{b.title}</p>
