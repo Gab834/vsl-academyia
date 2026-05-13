@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { LayoutDashboard, BookOpen, Play, Calendar, Users, MessagesSquare, ArrowLeft } from "lucide-react"
+import { LayoutDashboard, BookOpen, Play, Calendar, Users, MessagesSquare, ArrowLeft, UserPlus } from "lucide-react"
 
 const adminNav = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -8,6 +8,7 @@ const adminNav = [
   { label: "Eventos", href: "/admin/eventos", icon: Calendar },
   { label: "Comunidades", href: "/admin/comunidades", icon: MessagesSquare },
   { label: "Assinantes", href: "/admin/assinantes", icon: Users },
+  { label: "Criar Acesso", href: "/admin/usuarios", icon: UserPlus },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
