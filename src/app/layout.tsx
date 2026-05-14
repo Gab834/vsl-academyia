@@ -1,43 +1,28 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import { ConditionalSidebar } from "@/components/conditional-sidebar"
+import { Inter } from "next/font/google"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 })
 
 export const metadata: Metadata = {
-  title: "Academy.IA",
-  description: "Skills, projetos e aulas exclusivas de IA",
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+  title: "Ninety Eight | Web Design Agency",
+  description: "Building world-class brands that drive revenue.",
+  icons: { icon: "/icon.png" },
+  openGraph: {
+    title: "Ninety Eight | Web Design Agency",
+    description: "Web Design That Makes You Look Better Than Anyone Else",
+    type: "website",
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
-    >
-      <body className="h-full flex bg-background text-foreground">
-        <ConditionalSidebar />
-        <main className="flex-1 overflow-y-auto pt-14 md:pt-0 pb-16 md:pb-0">
-          {children}
-        </main>
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
     </html>
   )
 }
