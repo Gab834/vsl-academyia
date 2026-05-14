@@ -55,11 +55,25 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     console.log("[webhook] payload completo:", JSON.stringify(body))
 
+    const event = detectEvent(body)
+    const plan = detectPlan(body)
+
+    // Eventos que não são compra confirmada → ignorar (retornar 200 para Cakto não retentar)
+    const PURCHASE_EVENTS = ["purchase_approved", "purchase", "paid", "approved", "compra_aprovada"]
+    const CANCEL_EVENTS = ["cancelled", "canceled", "chargeback", "refunded", "canceled_subscription"]
+    const RENEWAL_EVENTS = ["renewal", "renewed", "subscription_renewed", "rebill"]
+    const isActionable = [...PURCHASE_EVENTS, ...CANCEL_EVENTS, ...RENEWAL_EVENTS].includes(event)
+
+    if (!isActionable) {
+      console.log(`[webhook] evento ignorado: ${event}`)
+      return NextResponse.json({ ok: true, action: "ignored", event })
+    }
+
     const email: string =
+      body?.data?.customer?.email ??
       body?.customer?.email ??
       body?.buyer?.email ??
       body?.email ??
-      body?.data?.customer?.email ??
       body?.data?.buyer?.email ??
       body?.sale?.customer?.email ??
       body?.order?.customer?.email ??
@@ -68,13 +82,10 @@ export async function POST(req: NextRequest) {
       ""
 
     if (!email) {
-      console.log("[webhook] email não encontrado. campos recebidos:", Object.keys(body))
+      console.log("[webhook] email não encontrado. campos recebidos:", JSON.stringify(Object.keys(body)), "data keys:", JSON.stringify(body?.data ? Object.keys(body.data) : []))
       return NextResponse.json({ error: "Email não encontrado no payload", received: body }, { status: 400 })
     }
-
-    const event = detectEvent(body)
-    const plan = detectPlan(body)
-    const transactionId = body?.transaction?.id ?? body?.id ?? undefined
+    const transactionId = body?.data?.id ?? body?.transaction?.id ?? body?.id ?? undefined
 
     // CANCELAMENTO ou CHARGEBACK
     if (["cancelled", "canceled", "chargeback", "refunded", "canceled_subscription"].includes(event)) {
@@ -111,7 +122,7 @@ export async function POST(req: NextRequest) {
       password,
       email_confirm: true,
       user_metadata: {
-        full_name: body?.customer?.name ?? body?.buyer?.name ?? email.split("@")[0],
+        full_name: body?.data?.customer?.name ?? body?.customer?.name ?? email.split("@")[0],
         plan,
       },
     })
