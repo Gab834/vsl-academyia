@@ -20,6 +20,20 @@ export function ModulesMarquee() {
       borderTop: "1px solid rgba(255,255,255,0.05)",
       overflow: "hidden",
     }}>
+      <style>{`
+        @keyframes marquee-slide {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .modules-track {
+          display: flex !important;
+          flex-direction: row !important;
+          width: max-content !important;
+          animation: marquee-slide 35s linear infinite;
+        }
+        .modules-track:hover { animation-play-state: paused; }
+      `}</style>
+
       <div style={{ textAlign: "center", marginBottom: 48, padding: "0 28px" }}>
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 16,
@@ -40,7 +54,6 @@ export function ModulesMarquee() {
       </div>
 
       <div style={{ position: "relative" }}>
-        {/* Fade edges */}
         <div style={{
           position: "absolute", left: 0, top: 0, bottom: 0, width: 120, zIndex: 2,
           background: "linear-gradient(to right, #0a0c14, transparent)",
@@ -52,7 +65,7 @@ export function ModulesMarquee() {
           pointerEvents: "none",
         }} />
 
-        <div className="marquee-track" style={{ gap: 16 }}>
+        <div className="modules-track" style={{ gap: 16 }}>
           {doubled.map((mod, i) => (
             <div
               key={i}
