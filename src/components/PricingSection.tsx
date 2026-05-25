@@ -126,7 +126,8 @@ export function PricingSection() {
             ))}
           </div>
 
-          <a href={CAKTO} target="_blank" rel="noopener noreferrer" style={{
+          <style>{`@media(max-width:768px){.pricing-cta{padding:14px 20px!important;font-size:15px!important}}`}</style>
+          <a href={CAKTO} target="_blank" rel="noopener noreferrer" className="pricing-cta" style={{
             display: "flex", width: "100%", padding: "18px 24px", borderRadius: 14,
             backgroundColor: "#4060E8", color: "#fff",
             fontSize: 18, fontWeight: 700, textAlign: "center", textDecoration: "none",

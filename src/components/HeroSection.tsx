@@ -82,12 +82,13 @@ export function HeroSection() {
           Skills prontas de Claude Code, aulas diretas ao ponto e comunidade ativa de quem já usa IA pra criar, vender e automatizar.
         </p>
 
+        <style>{`@media(max-width:768px){.hero-cta{padding:13px 28px!important;font-size:15px!important}}`}</style>
         <div style={{ marginBottom: 64 }}>
           <a
             href={CAKTO}
             target="_blank"
             rel="noopener noreferrer"
-            className="animate-pulse-blue"
+            className="animate-pulse-blue hero-cta"
             style={{
               display: "inline-flex",
               alignItems: "center",
