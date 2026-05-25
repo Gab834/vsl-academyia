@@ -9,12 +9,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Ninety Eight | Web Design Agency",
-  description: "Building world-class brands that drive revenue.",
+  title: "Academy.IA — Aprenda a construir com IA",
+  description: "Skills prontas de Claude Code, aulas diretas ao ponto e comunidade ativa de quem já usa IA pra criar, vender e automatizar.",
   icons: { icon: "/icon.png" },
   openGraph: {
-    title: "Ninety Eight | Web Design Agency",
-    description: "Web Design That Makes You Look Better Than Anyone Else",
+    title: "Academy.IA — Aprenda a construir com IA",
+    description: "Skills prontas de Claude Code, aulas diretas ao ponto e comunidade ativa de quem já usa IA pra criar, vender e automatizar.",
     type: "website",
   },
 }

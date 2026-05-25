@@ -1,120 +1,128 @@
 "use client"
-import Image from "next/image"
 
-const stats = [
-  { number: "7+", label: "CELEBRITY CLIENTS" },
-  { number: "+32.5%", label: "AV. CONVERSION RATE INCREASE" },
-  { number: "DUBAI", label: "CORE OFFICE" },
-]
+const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
+
 
 export function HeroSection() {
   return (
     <section
       id="hero"
       style={{
-        minHeight: "100vh",
-        padding: "200px 28px 80px",
-        textAlign: "center",
         position: "relative",
         overflow: "hidden",
-        background: `
-          radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,255,239,0.1) 0%, transparent 60%),
-          radial-gradient(ellipse 70% 40% at 20% 90%, rgba(0,200,180,0.06) 0%, transparent 50%)
-        `,
+        padding: "100px 28px 80px",
+        textAlign: "center",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
       }}
     >
-      <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }}>
-
-        {/* Badge */}
-        <div
-          className="animate-fade-up delay-1"
+      {/* Banner FULL WIDTH — cobre TODA a section de borda a borda */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <img
+          src="/hero-banner.png"
+          alt=""
           style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            marginBottom: 28, fontSize: 13, fontWeight: 500,
-            letterSpacing: "0.12em", textTransform: "uppercase",
-            color: "rgb(0, 255, 239)",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
+            display: "block",
           }}
-        >
-          <span style={{ width: 3, height: 16, background: "rgba(255,255,255,0.3)", borderRadius: 2, flexShrink: 0 }} />
-          PREMIER WEB DESIGN AGENCY IN DUBAI
-        </div>
+        />
+        {/* Overlay escuro para texto ser legível */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, rgba(10,12,20,0.88) 0%, rgba(10,12,20,0.72) 35%, rgba(10,12,20,0.82) 65%, rgba(10,12,20,0.99) 100%)",
+        }} />
+      </div>
 
-        {/* H1 */}
-        <h1
-          className="animate-fade-up delay-2"
-          style={{
-            fontSize: "clamp(42px, 5.5vw, 76.8px)",
-            fontWeight: 600,
-            lineHeight: 1.05,
-            letterSpacing: "-0.05em",
-            background: "linear-gradient(135deg, #ffffff 50%, rgba(255,255,255,0.5))",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            maxWidth: 860,
-            margin: "0 auto 40px",
-          }}
-        >
-          Web Design That Makes You Look Better Than Anyone Else
-        </h1>
+      {/* Conteúdo */}
+      <div style={{ maxWidth: 860, margin: "0 auto", position: "relative", zIndex: 1, width: "100%" }}>
 
-        {/* CTA Button */}
-        <div className="animate-fade-up delay-3" style={{ marginBottom: 56 }}>
-          <a
-            href="#pricing"
+        {/* Logo real */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 36 }}>
+          <img
+            src="/logo-academyia.png"
+            alt="Academy.iA"
+            className="hero-logo"
             style={{
-              display: "inline-flex", alignItems: "center",
-              padding: "14px 36px", borderRadius: 9999,
-              background: "#ffffff", color: "#000000",
-              fontSize: 18, fontWeight: 600, textDecoration: "none",
-              transition: "opacity 0.2s",
-              fontFamily: "var(--font-inter)",
+              height: 200,
+              width: "auto",
+              objectFit: "contain",
+              filter: "drop-shadow(0 2px 16px rgba(64,96,232,0.5))",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.88" }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1" }}
-          >
-            See Pricing
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div
-          className="animate-fade-up delay-4"
-          style={{
-            display: "flex", justifyContent: "center", gap: 48,
-            flexWrap: "wrap", padding: "32px 0",
-            borderTop: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
-          {stats.map((s) => (
-            <div key={s.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-              <span style={{
-                fontSize: "clamp(28px, 3.5vw, 48px)", fontWeight: 600,
-                color: "#fff", letterSpacing: "-0.02em", lineHeight: 1,
-              }}>
-                {s.number}
-              </span>
-              <span style={{
-                fontSize: 11, fontWeight: 500, color: "rgb(0, 255, 239)",
-                letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 4,
-              }}>
-                {s.label}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Device mockup */}
-        <div className="animate-fade-in delay-5" style={{ marginTop: 64, position: "relative" }}>
-          <Image
-            src="/images/hero-image.avif"
-            alt="Website design showcase"
-            width={900}
-            height={310}
-            style={{ width: "100%", height: "auto", borderRadius: 16 }}
-            priority
           />
         </div>
+
+        <h1 style={{
+          fontSize: "clamp(30px, 4vw, 52px)",
+          fontWeight: 700,
+          lineHeight: 1.06,
+          letterSpacing: "-0.04em",
+          background: "linear-gradient(135deg, #EEEEF5 40%, rgba(238,238,245,0.5))",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          maxWidth: 780,
+          margin: "0 auto 20px",
+        }}>
+          Aprenda a construir com IA — e pare de perder tempo assistindo tutorial que não aplica
+        </h1>
+
+        <p style={{
+          fontSize: "clamp(17px, 2vw, 20px)",
+          lineHeight: 1.65,
+          color: "rgba(238,238,245,0.75)",
+          maxWidth: 520,
+          margin: "0 auto 44px",
+        }}>
+          Skills prontas de Claude Code, aulas diretas ao ponto e comunidade ativa de quem já usa IA pra criar, vender e automatizar.
+        </p>
+
+        <div style={{ marginBottom: 64 }}>
+          <a
+            href={CAKTO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="animate-pulse-blue"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "16px 48px",
+              borderRadius: 9999,
+              backgroundColor: "#4060E8",
+              color: "#fff",
+              fontSize: 18,
+              fontWeight: 700,
+              textDecoration: "none",
+              boxShadow: "0 8px 40px rgba(64,96,232,0.45)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+              border: "none",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)"
+              e.currentTarget.style.boxShadow = "0 12px 48px rgba(64,96,232,0.7)"
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)"
+              e.currentTarget.style.boxShadow = "0 8px 40px rgba(64,96,232,0.45)"
+            }}
+          >
+            Garantir meu acesso vitalício
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <p style={{ marginTop: 14, fontSize: 13, color: "rgba(238,238,245,0.45)" }}>
+            Pagamento único · Acesso imediato · Sem mensalidades
+          </p>
+        </div>
+
 
       </div>
     </section>

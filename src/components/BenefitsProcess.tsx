@@ -1,100 +1,137 @@
-import Image from "next/image"
+"use client"
 
-const steps = [
-  { num: "01", text: "We start with an analysis of your target audience. All websites need to be curated differently to appeal to different customer or investor profiles." },
-  { num: "02", text: "The mockups phase. At this stage we draft multiple potential ideas, then shortlist and finalise the leading options to present." },
-  { num: "03", text: "Deployment & data collection. We analyse performance and feedback data after deployment of your website to continue refinement." },
-  { num: "04", text: "Ongoing edits. Once your website is live, we maintain availability to make small edits and updates to content, as well as do regular performance checks." },
+const features = [
+  {
+    icon: "🎬",
+    title: "Aulas de Claude Code",
+    desc: "Vídeos práticos ensinando como usar IA para criar sites, automatizar tarefas e vender mais.",
+  },
+  {
+    icon: "⚡",
+    title: "Biblioteca de Skills",
+    desc: "Skills prontas para baixar e usar: prompts, templates e workflows de IA para o seu negócio.",
+  },
+  {
+    icon: "👥",
+    title: "Comunidade Exclusiva",
+    desc: "Grupo com outros membros para trocar experiências, dúvidas e oportunidades de parceria.",
+  },
+  {
+    icon: "📡",
+    title: "Lives Gravadas",
+    desc: "Sessões ao vivo gravadas e disponíveis pra assistir quando quiser, sem perder nada.",
+  },
+  {
+    icon: "🗺️",
+    title: "Mapa Mental de IA",
+    desc: "Guia visual completo com as melhores ferramentas e como conectá-las no seu fluxo.",
+  },
+  {
+    icon: "🔔",
+    title: "Novidades Constantes",
+    desc: "Conteúdo novo toda semana. Você não compra um produto estático — entra em uma comunidade viva.",
+  },
 ]
 
-const benefits = [
-  "Lower client acquisition costs",
-  "Widely increase trust and conversions",
-  "Build a brand that creates a lasting impression",
+const steps = [
+  { num: "01", text: "Clique no botão, faça o pagamento único de R$97 e receba acesso imediato no seu email." },
+  { num: "02", text: "Faça login na plataforma e explore as aulas, skills e recursos organizados por categoria." },
+  { num: "03", text: "Coloque em prática com as skills prontas e tire dúvidas na comunidade com outros membros." },
+  { num: "04", text: "Acesse para sempre — sem mensalidade, sem prazo. Novos conteúdos adicionados toda semana." },
 ]
 
 export function BenefitsProcess() {
   return (
     <>
-      <section style={{ background: "#030604", padding: "120px 28px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      <section id="inclusos" style={{ background: "#0a0c14", padding: "120px 28px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <style>{`@media(max-width:768px){.features-grid{grid-template-columns:1fr!important}}`}</style>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 16,
-            fontSize: 13, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase" as const,
-            color: "rgb(0, 255, 239)",
+            fontSize: 12, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const,
+            color: "#4060E8",
           }}>
-            <span style={{ width: 3, height: 16, background: "rgba(255,255,255,0.3)", borderRadius: 2 }} />
-            REACH YOUR POTENTIAL
+            <span style={{ width: 3, height: 14, background: "rgba(64,96,232,0.4)", borderRadius: 2 }} />
+            O QUE ESTÁ INCLUSO
           </div>
           <h2 style={{
-            fontSize: "clamp(36px, 4vw, 60px)", fontWeight: 600, letterSpacing: "-0.04em", lineHeight: 1.1,
-            background: "linear-gradient(135deg, #ffffff 50%, rgba(255,255,255,0.5))",
+            fontSize: "clamp(36px, 4vw, 60px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.1,
+            background: "linear-gradient(135deg, #EEEEF5 50%, rgba(238,238,245,0.4))",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-            marginBottom: 24, maxWidth: 700,
+            marginBottom: 16, maxWidth: 700,
           }}>
-            The Benefits Of A Top-Tier Website
+            Tudo que você precisa para dominar a IA
           </h2>
-          <p style={{ fontSize: 18, lineHeight: 1.7, color: "rgba(255,255,255,0.65)", maxWidth: 560, marginBottom: 16 }}>
-            Our clients had the same problem you have right now with your business - missing out on potential to scale much faster.
-          </p>
-          <p style={{ fontSize: 18, lineHeight: 1.7, color: "rgba(255,255,255,0.65)", maxWidth: 560, marginBottom: 40 }}>
-            Working with us, our clients always:
+          <p style={{ fontSize: 18, lineHeight: 1.7, color: "rgba(238,238,245,0.55)", maxWidth: 520, marginBottom: 48 }}>
+            Uma plataforma completa que cresce toda semana. Tudo o que você precisa para aplicar IA de verdade.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
-            {benefits.map((b) => (
-              <div key={b} style={{
-                background: "rgb(13, 18, 28)", border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 16, padding: "28px", fontSize: 18, fontWeight: 500,
-                color: "rgba(255,255,255,0.85)", lineHeight: 1.5,
-              }}>
-                {b}
-              </div>
-            ))}
+          {/* Mockup da comunidade */}
+          <div style={{ width: "100%", marginBottom: 64, textAlign: "center" }}>
+            <img
+              src="/community-mockup.png"
+              alt="Plataforma Academy.IA"
+              style={{
+                width: "100%",
+                maxWidth: 900,
+                height: "auto",
+                display: "inline-block",
+              }}
+            />
           </div>
 
-          <div style={{ overflow: "hidden", marginTop: 48, position: "relative" }}>
-            <div style={{ display: "flex", gap: 16, width: "max-content", animation: "marquee 30s linear infinite" }}>
-              {[0, 1].map((set) =>
-                [1, 2, 3, 4, 5].map((n) => (
-                  <Image
-                    key={`${set}-${n}`}
-                    src={`/images/service-0${n}.avif`}
-                    alt={`Service ${n}`}
-                    width={340}
-                    height={130}
-                    style={{ height: 130, width: "auto", borderRadius: 12, objectFit: "cover", flexShrink: 0 }}
-                  />
-                ))
-              )}
-            </div>
+          <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            {features.map((f) => (
+              <div key={f.title} style={{
+                background: "rgb(14, 17, 28)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: 16, padding: "28px 24px",
+                transition: "border-color 0.2s",
+              }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(64,96,232,0.25)" }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)" }}
+              >
+                <div style={{ fontSize: 32, marginBottom: 16 }}>{f.icon}</div>
+                <p style={{ fontSize: 17, fontWeight: 600, color: "#EEEEF5", marginBottom: 8 }}>{f.title}</p>
+                <p style={{ fontSize: 15, lineHeight: 1.6, color: "rgba(238,238,245,0.5)" }}>{f.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="process" style={{ background: "#030604", padding: "120px 28px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      <section id="como-funciona" style={{ background: "#0a0c14", padding: "120px 28px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{
-            fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 600, letterSpacing: "-0.04em", lineHeight: 1.1,
-            background: "linear-gradient(135deg, #ffffff 50%, rgba(255,255,255,0.5))",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-            textAlign: "center", marginBottom: 64,
-          }}>
-            Our Process
-          </h2>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 16,
+              fontSize: 12, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const,
+              color: "#4060E8",
+            }}>
+              <span style={{ width: 3, height: 14, background: "rgba(64,96,232,0.4)", borderRadius: 2 }} />
+              COMO FUNCIONA
+            </div>
+            <h2 style={{
+              fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.1,
+              background: "linear-gradient(135deg, #EEEEF5 50%, rgba(238,238,245,0.4))",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+            }}>
+              Simples assim
+            </h2>
+          </div>
           {steps.map((step) => (
             <div key={step.num} style={{
-              borderTop: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "1px solid rgba(255,255,255,0.07)",
               padding: "32px 0",
               display: "grid",
               gridTemplateColumns: "80px 1fr",
               gap: 24,
               alignItems: "start",
             }}>
-              <span style={{ fontSize: 56, fontWeight: 700, color: "rgba(255,255,255,0.06)", lineHeight: 1 }}>
+              <span style={{ fontSize: 52, fontWeight: 700, color: "rgba(64,96,232,0.15)", lineHeight: 1 }}>
                 {step.num}
               </span>
-              <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(255,255,255,0.65)" }}>
+              <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(238,238,245,0.65)", paddingTop: 8 }}>
                 {step.text}
               </p>
             </div>
