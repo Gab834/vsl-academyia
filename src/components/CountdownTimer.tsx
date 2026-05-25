@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 
-const TARGET_DATE = new Date("2026-06-01T23:59:00")
+const TARGET_DATE = new Date("2026-06-07T23:59:00")
 
 function pad(n: number) {
   return String(n).padStart(2, "0")
