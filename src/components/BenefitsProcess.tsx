@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 
 const features = [
   {
@@ -68,9 +69,11 @@ export function BenefitsProcess() {
 
           {/* Mockup da comunidade */}
           <div style={{ width: "100%", marginBottom: 64, textAlign: "center" }}>
-            <img
+            <Image
               src="/community-mockup.png"
               alt="Plataforma Academy.IA"
+              width={1672}
+              height={941}
               style={{
                 width: "100%",
                 maxWidth: 900,

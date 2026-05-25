@@ -1,7 +1,7 @@
 "use client"
-
-import Image from "next/image"
 import { useEffect, useState } from "react"
+
+const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -16,105 +16,64 @@ export function Navbar() {
     <nav
       style={{
         position: "fixed",
-        top: 48,
+        top: 60,
         left: "50%",
         transform: "translateX(-50%)",
         width: "min(1000px, calc(100vw - 48px))",
         borderRadius: 9999,
-        backdropFilter: "blur(3px)",
+        backdropFilter: "blur(12px)",
         zIndex: 999,
         transition: "background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease",
-        background: scrolled ? "rgba(3, 6, 4, 0.92)" : "transparent",
-        boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.4)" : "none",
-        border: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
+        background: scrolled ? "rgba(10, 12, 20, 0.95)" : "transparent",
+        boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.5)" : "none",
+        border: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "10px 20px 10px 16px",
-          height: 70,
-        }}
-      >
-        {/* Logo */}
-        <a href="#hero" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <span className="nav-logo-full">
-            <Image src="/images/logo.avif" alt="Ninety Eight" width={120} height={18} priority />
-          </span>
-          <span className="nav-logo-icon">
-            <Image src="/images/logo-icon.avif" alt="Ninety Eight" width={36} height={36} priority />
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 20px 10px 24px", height: 66 }}>
+        <a href="#hero" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+          <span style={{ fontSize: 18, fontWeight: 700, color: "#EEEEF5", letterSpacing: "-0.3px" }}>
+            Academy<span style={{ color: "#4060E8" }}>.IA</span>
           </span>
         </a>
 
-        {/* Links */}
-        <div
-          className="nav-links"
-          style={{ display: "flex", gap: 32, alignItems: "center" }}
-        >
-          {["Home", "Our Work", "Process", "Pricing"].map((link) => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase().replace(" ", "")}`}
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.7)",
-                textDecoration: "none",
-                transition: "color 0.2s",
-                fontFamily: "var(--font-inter)",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#fff" }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.7)" }}
+        <div className="nav-links" style={{ display: "flex", gap: 32, alignItems: "center" }}>
+          {[
+            { label: "O que é", href: "#problem" },
+            { label: "Conteúdo", href: "#inclusos" },
+            { label: "Preço", href: "#pricing" },
+            { label: "FAQ", href: "#faq" },
+          ].map((link) => (
+            <a key={link.label} href={link.href} style={{
+              fontSize: 15, fontWeight: 500, color: "rgba(238,238,245,0.6)",
+              textDecoration: "none", transition: "color 0.2s",
+            }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#EEEEF5" }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(238,238,245,0.6)" }}
             >
-              {link}
+              {link.label}
             </a>
           ))}
         </div>
 
-        {/* CTA */}
-        <a
-          href="#pricing"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "10px 28px 10px 20px",
-            borderRadius: 9999,
-            border: "1.6px solid rgba(32, 252, 225, 0.37)",
-            background: "transparent",
-            color: "#fff",
-            fontSize: 16,
-            fontWeight: 700,
-            textDecoration: "none",
-            transition: "background 0.2s, border-color 0.2s",
-            fontFamily: "var(--font-inter)",
-            whiteSpace: "nowrap",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = "rgba(0,255,239,0.08)"
-            e.currentTarget.style.borderColor = "rgba(0,255,239,0.7)"
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent"
-            e.currentTarget.style.borderColor = "rgba(32,252,225,0.37)"
-          }}
+        <a href={CAKTO} target="_blank" rel="noopener noreferrer" style={{
+          display: "inline-flex", alignItems: "center", gap: 8,
+          padding: "10px 24px", borderRadius: 9999,
+          background: "#4060E8", color: "#fff",
+          fontSize: 15, fontWeight: 700, textDecoration: "none",
+          transition: "opacity 0.2s",
+          whiteSpace: "nowrap",
+        }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85" }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1" }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-          Start Your Project
+          Entrar na Academy
         </a>
       </div>
 
       <style>{`
-        .nav-logo-icon { display: none; }
-        .nav-logo-full { display: flex; }
         @media (max-width: 768px) {
           .nav-links { display: none !important; }
-          .nav-logo-full { display: none; }
-          .nav-logo-icon { display: flex; }
+          .nav-logo-full { display: none !important; }
         }
       `}</style>
     </nav>

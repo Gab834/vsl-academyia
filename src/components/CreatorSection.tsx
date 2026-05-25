@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 
 const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
 
@@ -52,10 +53,12 @@ export function CreatorSection() {
               border: "1px solid rgba(64,96,232,0.25)",
               boxShadow: "0 0 60px rgba(64,96,232,0.15), 0 24px 64px rgba(0,0,0,0.5)",
             }}>
-              <img
+              <Image
                 src="/gabriel.jpg"
                 alt="Gabriel de Almeida"
-                style={{ width: "100%", display: "block", objectFit: "cover" }}
+                width={3072}
+                height={4116}
+                style={{ width: "100%", display: "block", objectFit: "cover", height: "auto" }}
               />
             </div>
 

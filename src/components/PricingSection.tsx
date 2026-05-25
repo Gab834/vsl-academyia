@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 import { CountdownTimer } from "./CountdownTimer"
 
 const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
@@ -156,9 +157,11 @@ export function PricingSection() {
 
           {/* Selos de confiança */}
           <div style={{ marginTop: 24, textAlign: "center" }}>
-            <img
+            <Image
               src="/selos.webp"
               alt="Pagamento seguro e garantido"
+              width={295}
+              height={35}
               style={{ maxWidth: "100%", height: "auto", opacity: 0.75 }}
             />
           </div>

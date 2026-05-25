@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 
 const modules = [
   { src: "/modules/module-14.png", label: "Claude Code" },
@@ -89,9 +90,11 @@ export function ModulesMarquee() {
                 e.currentTarget.style.transform = "scale(1)"
               }}
             >
-              <img
+              <Image
                 src={mod.src}
                 alt={mod.label}
+                width={280}
+                height={158}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             </div>

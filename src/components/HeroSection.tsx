@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 
 const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
 
@@ -20,15 +21,14 @@ export function HeroSection() {
     >
       {/* Banner FULL WIDTH — cobre TODA a section de borda a borda */}
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        <img
+        <Image
           src="/hero-banner.png"
           alt=""
+          fill
+          priority
           style={{
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
             objectPosition: "center center",
-            display: "block",
           }}
         />
         {/* Overlay escuro para texto ser legível */}
@@ -44,10 +44,13 @@ export function HeroSection() {
 
         {/* Logo real */}
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 36 }}>
-          <img
+          <Image
             src="/logo-academyia.png"
             alt="Academy.iA"
+            width={355}
+            height={200}
             className="hero-logo"
+            priority
             style={{
               height: 200,
               width: "auto",
