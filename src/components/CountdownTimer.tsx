@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
 
-// Altere esta data para o prazo real da oferta
 const TARGET_DATE = new Date("2026-06-01T23:59:00")
 
 function pad(n: number) {
@@ -10,7 +9,7 @@ function pad(n: number) {
 
 function getTimeLeft() {
   const diff = TARGET_DATE.getTime() - Date.now()
-  if (diff <= 0) return { h: "00", m: "00", s: "00", d: "00" }
+  if (diff <= 0) return { d: "00", h: "00", m: "00", s: "00" }
   const d = Math.floor(diff / 86400000)
   const h = Math.floor((diff % 86400000) / 3600000)
   const m = Math.floor((diff % 3600000) / 60000)
@@ -18,10 +17,13 @@ function getTimeLeft() {
   return { d: pad(d), h: pad(h), m: pad(m), s: pad(s) }
 }
 
+const PLACEHOLDER = { d: "--", h: "--", m: "--", s: "--" }
+
 export function CountdownTimer() {
-  const [time, setTime] = useState(getTimeLeft())
+  const [time, setTime] = useState(PLACEHOLDER)
 
   useEffect(() => {
+    setTime(getTimeLeft())
     const id = setInterval(() => setTime(getTimeLeft()), 1000)
     return () => clearInterval(id)
   }, [])
@@ -42,9 +44,7 @@ export function CountdownTimer() {
       }}>
         🔥 Oferta encerra em
       </p>
-      <div style={{
-        display: "flex", justifyContent: "center", gap: 12,
-      }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
         {units.map(({ value, label }) => (
           <div key={label} className="countdown-box" style={{
             display: "flex", flexDirection: "column", alignItems: "center",
