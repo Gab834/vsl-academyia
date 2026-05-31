@@ -97,39 +97,44 @@ export function ObsidianBrainSection() {
           display: "flex", alignItems: "center", gap: 60,
         }}>
 
-          {/* Lado do vídeo / visual */}
+          {/* Lado do vídeo */}
           <div className="brain-video-side" style={{
             flex: "0 0 460px", width: 460,
             display: "flex", alignItems: "center", justifyContent: "center",
-            perspective: "800px",
+            perspective: "900px",
           }}>
-            <div
-              ref={brainRef}
-              className="brain-float"
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={{
-                width: "100%",
-                cursor: "grab",
-                transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
-                transition: tilt.x === 0 && tilt.y === 0
-                  ? "transform 0.8s cubic-bezier(0.23,1,0.32,1)"
-                  : "transform 0.1s ease-out",
-                transformStyle: "preserve-3d",
-              }}
-            >
-              <video
-                src="/videos/cerebro-obsidian.mp4"
-                autoPlay loop muted playsInline
+            {/* Float wrapper — só a animação de subir/descer */}
+            <div className="brain-float" style={{ width: "100%" }}>
+              {/* Tilt wrapper — só o efeito 3D do mouse */}
+              <div
+                ref={brainRef}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
                 style={{
                   width: "100%",
-                  display: "block",
-                  mixBlendMode: "screen",
-                  filter: "brightness(1.15) contrast(1.1) saturate(1.2)",
-                  pointerEvents: "none",
-                  userSelect: "none",
+                  cursor: "grab",
+                  transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+                  transition: tilt.x === 0 && tilt.y === 0
+                    ? "transform 0.8s cubic-bezier(0.23,1,0.32,1)"
+                    : "transform 0.08s linear",
+                  transformStyle: "preserve-3d",
+                  willChange: "transform",
                 }}
-              />
+              >
+                <video
+                  src="/videos/cerebro-obsidian.mp4"
+                  autoPlay loop muted playsInline
+                  style={{
+                    width: "100%",
+                    display: "block",
+                    mixBlendMode: "screen",
+                    filter: "brightness(1.2) contrast(1.15) saturate(1.3)",
+                    pointerEvents: "none",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
