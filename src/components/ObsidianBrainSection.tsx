@@ -88,7 +88,7 @@ export function ObsidianBrainSection() {
             position: "relative",
           }}>
             <Image
-              src="/obsidian-brain.jpg"
+              src="/obsidian-brain.png"
               alt="Segundo cérebro no Obsidian"
               width={460}
               height={460}
@@ -96,6 +96,7 @@ export function ObsidianBrainSection() {
                 width: "100%",
                 height: "100%",
                 objectFit: "contain",
+                filter: "invert(1)",
                 mixBlendMode: "screen",
                 display: "block",
               }}
