@@ -6,19 +6,10 @@ interface Node {
   vx: number; vy: number
   fx: number; fy: number
   radius: number
-  color: string
   isHub: boolean
   dragging: boolean
-  born: number
+  alpha: number
 }
-
-const COLORS = ["#a855f7", "#818cf8", "#c084fc", "#e879f9", "#d8b4fe", "#ffffff"]
-const HUB_INDICES = [0, 4, 10, 18, 28, 40, 55, 70, 85]
-const NODE_COUNT = 130
-const REPULSION = 1400
-const ATTRACTION = 0.016
-const DAMPING = 0.84
-const CENTER_PULL = 0.0025
 
 export function BrainCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -30,46 +21,96 @@ export function BrainCanvas() {
     if (!ctx) return
 
     let animId: number
-
-    const resize = () => {
-      const p = canvas.parentElement!
-      canvas.width = p.offsetWidth
-      canvas.height = p.offsetHeight
-    }
-    resize()
-    const ro = new ResizeObserver(resize)
-    ro.observe(canvas.parentElement!)
-
-    const cx = () => canvas.width / 2
-    const cy = () => canvas.height / 2
-
-    const nodes: Node[] = Array.from({ length: NODE_COUNT }, (_, i) => {
-      const isHub = HUB_INDICES.includes(i)
-      return {
-        x: cx() + (Math.random() - 0.5) * 160,
-        y: cy() + (Math.random() - 0.5) * 160,
-        vx: 0, vy: 0, fx: 0, fy: 0,
-        radius: isHub ? 5 + Math.random() * 5 : 1.5 + Math.random() * 2.5,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        isHub,
-        dragging: false,
-        born: Date.now() + i * 12,
-      }
-    })
-
-    // Edges: hubs get many connections, regular nodes get few
-    const edges: [number, number][] = []
-    for (let i = 0; i < NODE_COUNT; i++) {
-      const isHub = HUB_INDICES.includes(i)
-      const count = isHub ? 8 + Math.floor(Math.random() * 10) : 2 + Math.floor(Math.random() * 3)
-      for (let c = 0; c < count; c++) {
-        const j = Math.floor(Math.random() * NODE_COUNT)
-        if (j !== i) edges.push([i, j])
-      }
-    }
-
-    let mouseX = -9999, mouseY = -9999
     let dragNode: Node | null = null
+    let mouseX = -9999, mouseY = -9999
+    let startTime = 0
+
+    const NODE_COUNT = 110
+    const HUB_COUNT = 7
+    const REPULSION = 2200
+    const ATTRACTION = 0.022
+    const DAMPING = 0.72
+    const CENTER_PULL = 0.005
+
+    let nodes: Node[] = []
+    let edges: [number, number][] = []
+
+    const runPhysics = (steps: number) => {
+      const cx = canvas.width / 2
+      const cy = canvas.height / 2
+
+      for (let step = 0; step < steps; step++) {
+        nodes.forEach(n => { n.fx = 0; n.fy = 0 })
+
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i], b = nodes[j]
+            const dx = a.x - b.x, dy = a.y - b.y
+            const d2 = dx * dx + dy * dy || 0.001
+            const dist = Math.sqrt(d2)
+            const force = REPULSION / d2
+            const fx = (dx / dist) * force
+            const fy = (dy / dist) * force
+            a.fx += fx; a.fy += fy
+            b.fx -= fx; b.fy -= fy
+          }
+        }
+
+        edges.forEach(([ai, bi]) => {
+          const a = nodes[ai], b = nodes[bi]
+          const dx = b.x - a.x, dy = b.y - a.y
+          a.fx += dx * ATTRACTION; a.fy += dy * ATTRACTION
+          b.fx -= dx * ATTRACTION; b.fy -= dy * ATTRACTION
+        })
+
+        nodes.forEach(n => {
+          n.fx += (cx - n.x) * CENTER_PULL
+          n.fy += (cy - n.y) * CENTER_PULL
+          n.vx = (n.vx + n.fx) * DAMPING
+          n.vy = (n.vy + n.fy) * DAMPING
+          n.x += n.vx
+          n.y += n.vy
+        })
+      }
+    }
+
+    const init = () => {
+      const W = canvas.width, H = canvas.height
+      const cx = W / 2, cy = H / 2
+      const R = Math.min(W, H) * 0.38
+
+      nodes = Array.from({ length: NODE_COUNT }, (_, i) => {
+        const isHub = i < HUB_COUNT
+        const angle = Math.random() * Math.PI * 2
+        const r = isHub
+          ? R * (0.15 + Math.random() * 0.45)
+          : R * Math.pow(Math.random(), 0.6)
+        return {
+          x: cx + Math.cos(angle) * r + (Math.random() - 0.5) * 20,
+          y: cy + Math.sin(angle) * r * 0.85 + (Math.random() - 0.5) * 20,
+          vx: 0, vy: 0, fx: 0, fy: 0,
+          radius: isHub ? 7 + Math.random() * 7 : 2 + Math.random() * 3,
+          isHub,
+          dragging: false,
+          alpha: 0,
+        }
+      })
+
+      edges = []
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const isHub = i < HUB_COUNT
+        const count = isHub ? 10 + Math.floor(Math.random() * 14) : 2 + Math.floor(Math.random() * 3)
+        for (let c = 0; c < count; c++) {
+          const j = Math.floor(Math.random() * NODE_COUNT)
+          if (j !== i) edges.push([i, j])
+        }
+      }
+
+      // Settle the physics BEFORE first frame — no chaos visible
+      runPhysics(500)
+
+      startTime = Date.now()
+    }
 
     const getPos = (e: MouseEvent | Touch) => {
       const rect = canvas.getBoundingClientRect()
@@ -82,20 +123,19 @@ export function BrainCanvas() {
     }
     const onMouseDown = (e: MouseEvent) => {
       const p = getPos(e)
-      const hit = nodes.find(n => Math.hypot(n.x - p.x, n.y - p.y) < n.radius + 6)
-      if (hit) { dragNode = hit; dragNode.dragging = true }
+      dragNode = nodes.find(n => Math.hypot(n.x - p.x, n.y - p.y) < n.radius + 8) ?? null
+      if (dragNode) dragNode.dragging = true
     }
     const onMouseUp = () => { if (dragNode) { dragNode.dragging = false; dragNode = null } }
-
     const onTouchMove = (e: TouchEvent) => {
       e.preventDefault()
       const p = getPos(e.touches[0]); mouseX = p.x; mouseY = p.y
-      if (dragNode) { dragNode.x = p.x; dragNode.y = p.y }
+      if (dragNode) { dragNode.x = p.x; dragNode.y = p.y; dragNode.vx = 0; dragNode.vy = 0 }
     }
     const onTouchStart = (e: TouchEvent) => {
       const p = getPos(e.touches[0])
-      const hit = nodes.find(n => Math.hypot(n.x - p.x, n.y - p.y) < n.radius + 12)
-      if (hit) { dragNode = hit; dragNode.dragging = true }
+      dragNode = nodes.find(n => Math.hypot(n.x - p.x, n.y - p.y) < n.radius + 14) ?? null
+      if (dragNode) dragNode.dragging = true
     }
     const onTouchEnd = () => { if (dragNode) { dragNode.dragging = false; dragNode = null } }
 
@@ -106,104 +146,93 @@ export function BrainCanvas() {
     canvas.addEventListener("touchstart", onTouchStart)
     canvas.addEventListener("touchend", onTouchEnd)
 
-    const applyForces = () => {
-      const centerX = canvas.width / 2
-      const centerY = canvas.height / 2
-
-      nodes.forEach(n => { n.fx = 0; n.fy = 0 })
-
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j]
-          const dx = a.x - b.x
-          const dy = a.y - b.y
-          const d2 = dx * dx + dy * dy || 0.001
-          const dist = Math.sqrt(d2)
-          const force = REPULSION / d2
-          const fx = (dx / dist) * force
-          const fy = (dy / dist) * force
-          a.fx += fx; a.fy += fy
-          b.fx -= fx; b.fy -= fy
-        }
-      }
-
-      edges.forEach(([ai, bi]) => {
-        const a = nodes[ai], b = nodes[bi]
-        const dx = b.x - a.x, dy = b.y - a.y
-        a.fx += dx * ATTRACTION; a.fy += dy * ATTRACTION
-        b.fx -= dx * ATTRACTION; b.fy -= dy * ATTRACTION
-      })
-
-      nodes.forEach(n => {
-        n.fx += (centerX - n.x) * CENTER_PULL
-        n.fy += (centerY - n.y) * CENTER_PULL
-        if (n.dragging) return
-        n.vx = (n.vx + n.fx) * DAMPING
-        n.vy = (n.vy + n.fy) * DAMPING
-        n.x += n.vx
-        n.y += n.vy
-      })
-    }
-
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const now = Date.now()
+      const elapsed = Date.now() - startTime
+
+      // Staggered fade-in of nodes
+      nodes.forEach((n, i) => {
+        n.alpha = Math.min(1, Math.max(0, (elapsed - i * 9) / 700))
+      })
 
       // Edges
       edges.forEach(([ai, bi]) => {
         const a = nodes[ai], b = nodes[bi]
-        const ta = Math.min(1, Math.max(0, (now - a.born) / 900))
-        const tb = Math.min(1, Math.max(0, (now - b.born) / 900))
-        const t = Math.min(ta, tb)
+        const t = Math.min(a.alpha, b.alpha)
         if (t < 0.05) return
-
-        const nearMouse =
-          Math.hypot(a.x - mouseX, a.y - mouseY) < 70 ||
-          Math.hypot(b.x - mouseX, b.y - mouseY) < 70
-
+        const nearA = Math.hypot(a.x - mouseX, a.y - mouseY) < 65
+        const nearB = Math.hypot(b.x - mouseX, b.y - mouseY) < 65
+        const near = nearA || nearB
         ctx.beginPath()
         ctx.moveTo(a.x, a.y)
         ctx.lineTo(b.x, b.y)
-        ctx.strokeStyle = nearMouse
-          ? `rgba(200,160,255,${0.55 * t})`
-          : `rgba(130,90,220,${0.18 * t})`
-        ctx.lineWidth = nearMouse ? 0.9 : 0.5
+        ctx.strokeStyle = near
+          ? `rgba(230,200,255,${0.65 * t})`
+          : `rgba(190,160,255,${0.2 * t})`
+        ctx.lineWidth = near ? 0.9 : 0.5
         ctx.stroke()
       })
 
       // Nodes
       nodes.forEach(n => {
-        const t = Math.min(1, Math.max(0, (now - n.born) / 700))
-        if (t < 0.04) return
-
+        if (n.alpha < 0.04) return
         const hovered = Math.hypot(n.x - mouseX, n.y - mouseY) < n.radius + 10
-        const r = (hovered ? n.radius + 2.5 : n.radius) * t
+        const r = (hovered ? n.radius + 3 : n.radius)
 
+        // Glow
         if (hovered || n.isHub) {
-          const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 6)
-          g.addColorStop(0, n.color + "55")
-          g.addColorStop(1, n.color + "00")
-          ctx.globalAlpha = t * 0.75
+          const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 5.5)
+          g.addColorStop(0, `rgba(168,85,247,${0.45 * n.alpha})`)
+          g.addColorStop(1, "rgba(168,85,247,0)")
+          ctx.globalAlpha = n.alpha
           ctx.beginPath()
-          ctx.arc(n.x, n.y, r * 6, 0, Math.PI * 2)
+          ctx.arc(n.x, n.y, r * 5.5, 0, Math.PI * 2)
           ctx.fillStyle = g
           ctx.fill()
-          ctx.globalAlpha = 1
         }
 
-        ctx.globalAlpha = t
+        ctx.globalAlpha = n.alpha
         ctx.beginPath()
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2)
-        ctx.fillStyle = hovered ? "#ffffff" : n.color
+        ctx.fillStyle = hovered ? "#ffffff" : (n.isHub ? "#f3e8ff" : "#ddd6fe")
         ctx.fill()
         ctx.globalAlpha = 1
       })
 
-      applyForces()
+      // Gentle live physics (very slow drift after settling)
+      if (!nodes.every(n => n.dragging === false)) {
+        nodes.forEach(n => { n.fx = 0; n.fy = 0 })
+        edges.forEach(([ai, bi]) => {
+          const a = nodes[ai], b = nodes[bi]
+          if (!a.dragging && !b.dragging) return
+          const dx = b.x - a.x, dy = b.y - a.y
+          a.fx += dx * 0.01; a.fy += dy * 0.01
+          b.fx -= dx * 0.01; b.fy -= dy * 0.01
+        })
+        nodes.forEach(n => {
+          if (n.dragging) return
+          n.vx = (n.vx + n.fx) * 0.6
+          n.vy = (n.vy + n.fy) * 0.6
+          n.x += n.vx
+          n.y += n.vy
+        })
+      }
+
       animId = requestAnimationFrame(draw)
     }
 
+    const resize = () => {
+      const p = canvas.parentElement!
+      canvas.width = p.offsetWidth
+      canvas.height = p.offsetHeight
+      init()
+    }
+
+    resize()
     draw()
+
+    const ro = new ResizeObserver(resize)
+    ro.observe(canvas.parentElement!)
 
     return () => {
       cancelAnimationFrame(animId)
