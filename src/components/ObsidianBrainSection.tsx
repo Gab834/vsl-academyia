@@ -1,7 +1,25 @@
 "use client"
 import Image from "next/image"
+import { useRef } from "react"
 
 export function ObsidianBrainSection() {
+  const tiltRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = tiltRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    el.style.transform = `perspective(800px) rotateY(${x * 18}deg) rotateX(${-y * 14}deg) scale(1.04)`
+  }
+
+  const handleMouseLeave = () => {
+    const el = tiltRef.current
+    if (!el) return
+    el.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)"
+  }
+
   return (
     <section style={{
       background: "linear-gradient(180deg, #0a0c14 0%, #0d0b1a 50%, #0a0c14 100%)",
@@ -11,19 +29,43 @@ export function ObsidianBrainSection() {
     }}>
       <style>{`
         @keyframes brain-float {
-          0%, 100% { transform: translateY(0px) scale(1); }
-          50% { transform: translateY(-18px) scale(1.03); }
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-14px); }
         }
-        @keyframes glow-pulse {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.12); }
+        @keyframes glow-breathe {
+          0%, 100% { opacity: 0.35; transform: translate(-50%,-50%) scale(1); }
+          50% { opacity: 0.75; transform: translate(-50%,-50%) scale(1.18); }
         }
-        @keyframes fade-up {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes scan-sweep {
+          0%   { top: 8%; opacity: 0; }
+          4%   { opacity: 1; }
+          96%  { opacity: 1; }
+          100% { top: 88%; opacity: 0; }
         }
-        .brain-float { animation: brain-float 6s ease-in-out infinite; }
-        .glow-bg { animation: glow-pulse 4s ease-in-out infinite; }
+        @keyframes glitch-flash {
+          0%,100% { clip-path: inset(0 0 100% 50%); opacity: 0; }
+          10% { clip-path: inset(20% 0 60% 50%); opacity: 0.35; }
+          20% { clip-path: inset(55% 0 30% 50%); opacity: 0.25; }
+          30% { clip-path: inset(10% 0 75% 50%); opacity: 0.4; }
+          40% { clip-path: inset(0 0 100% 50%); opacity: 0; }
+        }
+        .brain-tilt {
+          transition: transform 0.18s ease-out;
+          transform-style: preserve-3d;
+        }
+        .brain-float-wrap {
+          animation: brain-float 7s ease-in-out infinite;
+        }
+        .glow-behind {
+          animation: glow-breathe 4s ease-in-out infinite;
+        }
+        .scan-line {
+          animation: scan-sweep 3.5s linear infinite;
+        }
+        .glitch-overlay {
+          animation: glitch-flash 8s ease-in-out infinite;
+          animation-delay: 2s;
+        }
         .brain-tag {
           display: inline-flex;
           align-items: center;
@@ -63,16 +105,15 @@ export function ObsidianBrainSection() {
         }
         @media (max-width: 768px) {
           .brain-grid { flex-direction: column !important; }
-          .brain-video-side { width: 100% !important; min-height: 300px !important; }
+          .brain-video-side { width: 100% !important; min-height: 320px !important; }
         }
       `}</style>
 
-      {/* Fundo roxo brilhante */}
-      <div className="glow-bg" style={{
-        position: "absolute", top: "50%", left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: 600, height: 600,
-        background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)",
+      {/* Fundo roxo respirando */}
+      <div className="glow-behind" style={{
+        position: "absolute", top: "50%", left: "30%",
+        width: 520, height: 520,
+        background: "radial-gradient(circle, rgba(120,60,240,0.2) 0%, transparent 70%)",
         borderRadius: "50%",
         pointerEvents: "none",
       }} />
@@ -83,24 +124,52 @@ export function ObsidianBrainSection() {
         }}>
 
           {/* Lado do cérebro */}
-          <div className="brain-video-side" style={{
-            flex: "0 0 460px", width: 460, height: 460,
-            position: "relative",
-          }}>
-            <Image
-              src="/obsidian-brain.png"
-              alt="Segundo cérebro no Obsidian"
-              width={460}
-              height={460}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
-                filter: "invert(1)",
-                mixBlendMode: "screen",
-                display: "block",
-              }}
-            />
+          <div
+            className="brain-video-side"
+            style={{ flex: "0 0 460px", width: 460, height: 460 }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            {/* Float wrapper */}
+            <div className="brain-float-wrap" style={{ width: "100%", height: "100%", position: "relative" }}>
+              {/* Tilt wrapper */}
+              <div ref={tiltRef} className="brain-tilt" style={{ width: "100%", height: "100%", position: "relative" }}>
+
+                {/* Imagem principal */}
+                <Image
+                  src="/brain-ai.png"
+                  alt="Segundo cérebro com IA"
+                  width={460}
+                  height={460}
+                  style={{
+                    width: "100%", height: "100%",
+                    objectFit: "contain",
+                    mixBlendMode: "screen",
+                    display: "block",
+                    position: "relative", zIndex: 1,
+                  }}
+                />
+
+                {/* Scan line — só no lado direito (digital) */}
+                <div style={{
+                  position: "absolute", top: 0, left: "50%", right: 0, bottom: 0,
+                  overflow: "hidden", zIndex: 2, pointerEvents: "none",
+                }}>
+                  <div className="scan-line" style={{
+                    position: "absolute", left: 0, right: 0, height: 2,
+                    background: "linear-gradient(90deg, transparent, rgba(100,160,255,0.7), rgba(180,220,255,0.9), rgba(100,160,255,0.7), transparent)",
+                    boxShadow: "0 0 12px 3px rgba(120,180,255,0.5)",
+                  }} />
+                </div>
+
+                {/* Glitch flash overlay — lado direito */}
+                <div className="glitch-overlay" style={{
+                  position: "absolute", inset: 0, zIndex: 3, pointerEvents: "none",
+                  background: "rgba(80,120,255,0.18)",
+                }} />
+
+              </div>
+            </div>
           </div>
 
           {/* Lado do texto */}
