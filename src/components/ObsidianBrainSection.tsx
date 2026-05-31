@@ -1,5 +1,5 @@
 "use client"
-import { BrainCanvas } from "./BrainCanvas"
+import Image from "next/image"
 
 export function ObsidianBrainSection() {
   return (
@@ -82,11 +82,24 @@ export function ObsidianBrainSection() {
           display: "flex", alignItems: "center", gap: 60,
         }}>
 
-          {/* Lado do cérebro 3D */}
+          {/* Lado do cérebro */}
           <div className="brain-video-side" style={{
             flex: "0 0 460px", width: 460, height: 460,
+            position: "relative",
           }}>
-            <BrainCanvas />
+            <Image
+              src="/obsidian-brain.jpg"
+              alt="Segundo cérebro no Obsidian"
+              width={460}
+              height={460}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                mixBlendMode: "screen",
+                display: "block",
+              }}
+            />
           </div>
 
           {/* Lado do texto */}
