@@ -1,7 +1,10 @@
 import { AnnouncementBar } from "@/components/AnnouncementBar"
 import { HeroSection } from "@/components/HeroSection"
 import { ModulesMarquee } from "@/components/ModulesMarquee"
+import { CourseModulesMarquee } from "@/components/CourseModulesMarquee"
 import { ProblemSections } from "@/components/ProblemSections"
+import { ObsidianBrainSection } from "@/components/ObsidianBrainSection"
+import { AgentSection } from "@/components/AgentSection"
 import { BenefitsProcess } from "@/components/BenefitsProcess"
 import { PricingSection } from "@/components/PricingSection"
 import { FAQSection } from "@/components/FAQSection"
@@ -15,7 +18,10 @@ export default function Page() {
       <AnnouncementBar />
       <HeroSection />
       <ModulesMarquee />
+      <CourseModulesMarquee />
       <ProblemSections />
+      <ObsidianBrainSection />
+      <AgentSection />
       <BenefitsProcess />
       <PricingSection />
       <FAQSection />
