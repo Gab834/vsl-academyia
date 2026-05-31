@@ -87,48 +87,16 @@ export function ObsidianBrainSection() {
             display: "flex", alignItems: "center", justifyContent: "center",
             position: "relative",
           }}>
-            <div className="brain-float" style={{ position: "relative", width: "100%", textAlign: "center" }}>
-              {/* Placeholder: substitua o src pelo vídeo quando disponível */}
-              {/* Para vídeo sem fundo: use mix-blend-mode lighten ou screen no <video> */}
-              <div style={{
-                width: "100%",
-                aspectRatio: "1/1",
-                borderRadius: 24,
-                background: "radial-gradient(circle at center, rgba(168,85,247,0.25) 0%, rgba(10,12,20,0.8) 70%)",
-                border: "1px solid rgba(168,85,247,0.2)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 80,
-                position: "relative",
-                overflow: "hidden",
-              }}>
-                <video
-                  src="/videos/cerebro-obsidian.mp4"
-                  autoPlay loop muted playsInline
-                  style={{
-                    width: "100%", height: "100%", objectFit: "cover",
-                    mixBlendMode: "screen",
-                    position: "absolute", inset: 0,
-                  }}
-                />
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "radial-gradient(circle at 30% 30%, rgba(168,85,247,0.3), transparent 60%)",
-                }} />
-              </div>
-
-              {/* Badge flutuante */}
-              <div style={{
-                position: "absolute", top: -16, right: -16,
-                background: "linear-gradient(135deg, #7c3aed, #4060E8)",
-                borderRadius: 12, padding: "8px 14px",
-                fontSize: 11, fontWeight: 700, color: "#fff",
-                boxShadow: "0 8px 24px rgba(124,58,237,0.4)",
-                letterSpacing: "0.05em",
-              }}>
-                OBSIDIAN + CLAUDE CODE
-              </div>
+            <div className="brain-float" style={{ width: "100%" }}>
+              <video
+                src="/videos/cerebro-obsidian.mp4"
+                autoPlay loop muted playsInline
+                style={{
+                  width: "100%",
+                  mixBlendMode: "screen",
+                  display: "block",
+                }}
+              />
             </div>
           </div>
 
