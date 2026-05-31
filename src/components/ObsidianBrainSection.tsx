@@ -1,22 +1,7 @@
 "use client"
-import { useRef, useState } from "react"
+import { BrainCanvas } from "./BrainCanvas"
 
 export function ObsidianBrainSection() {
-  const brainRef = useRef<HTMLDivElement>(null)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const el = brainRef.current
-    if (!el) return
-    const { left, top, width, height } = el.getBoundingClientRect()
-    const x = ((e.clientX - left) / width - 0.5) * 28
-    const y = ((e.clientY - top) / height - 0.5) * -28
-    setTilt({ x, y })
-  }
-
-  function handleMouseLeave() {
-    setTilt({ x: 0, y: 0 })
-  }
   return (
     <section style={{
       background: "linear-gradient(180deg, #0a0c14 0%, #0d0b1a 50%, #0a0c14 100%)",
@@ -97,45 +82,11 @@ export function ObsidianBrainSection() {
           display: "flex", alignItems: "center", gap: 60,
         }}>
 
-          {/* Lado do vídeo */}
+          {/* Lado do cérebro 3D */}
           <div className="brain-video-side" style={{
-            flex: "0 0 460px", width: 460,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            perspective: "900px",
+            flex: "0 0 460px", width: 460, height: 460,
           }}>
-            {/* Float wrapper — só a animação de subir/descer */}
-            <div className="brain-float" style={{ width: "100%" }}>
-              {/* Tilt wrapper — só o efeito 3D do mouse */}
-              <div
-                ref={brainRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                  width: "100%",
-                  cursor: "grab",
-                  transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
-                  transition: tilt.x === 0 && tilt.y === 0
-                    ? "transform 0.8s cubic-bezier(0.23,1,0.32,1)"
-                    : "transform 0.08s linear",
-                  transformStyle: "preserve-3d",
-                  willChange: "transform",
-                }}
-              >
-                <video
-                  src="/videos/cerebro-obsidian.mp4"
-                  autoPlay loop muted playsInline
-                  style={{
-                    width: "100%",
-                    display: "block",
-                    mixBlendMode: "screen",
-                    filter: "brightness(1.2) contrast(1.15) saturate(1.3)",
-                    pointerEvents: "none",
-                    userSelect: "none",
-                    WebkitUserSelect: "none",
-                  }}
-                />
-              </div>
-            </div>
+            <BrainCanvas />
           </div>
 
           {/* Lado do texto */}
