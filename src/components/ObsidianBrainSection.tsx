@@ -1,6 +1,22 @@
 "use client"
+import { useRef, useState } from "react"
 
 export function ObsidianBrainSection() {
+  const brainRef = useRef<HTMLDivElement>(null)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = brainRef.current
+    if (!el) return
+    const { left, top, width, height } = el.getBoundingClientRect()
+    const x = ((e.clientX - left) / width - 0.5) * 28
+    const y = ((e.clientY - top) / height - 0.5) * -28
+    setTilt({ x, y })
+  }
+
+  function handleMouseLeave() {
+    setTilt({ x: 0, y: 0 })
+  }
   return (
     <section style={{
       background: "linear-gradient(180deg, #0a0c14 0%, #0d0b1a 50%, #0a0c14 100%)",
@@ -83,18 +99,35 @@ export function ObsidianBrainSection() {
 
           {/* Lado do vídeo / visual */}
           <div className="brain-video-side" style={{
-            flex: "0 0 420px", width: 420,
+            flex: "0 0 460px", width: 460,
             display: "flex", alignItems: "center", justifyContent: "center",
-            position: "relative",
+            perspective: "800px",
           }}>
-            <div className="brain-float" style={{ width: "100%" }}>
+            <div
+              ref={brainRef}
+              className="brain-float"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                width: "100%",
+                cursor: "grab",
+                transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+                transition: tilt.x === 0 && tilt.y === 0
+                  ? "transform 0.8s cubic-bezier(0.23,1,0.32,1)"
+                  : "transform 0.1s ease-out",
+                transformStyle: "preserve-3d",
+              }}
+            >
               <video
                 src="/videos/cerebro-obsidian.mp4"
                 autoPlay loop muted playsInline
                 style={{
                   width: "100%",
-                  mixBlendMode: "screen",
                   display: "block",
+                  mixBlendMode: "screen",
+                  filter: "brightness(1.15) contrast(1.1) saturate(1.2)",
+                  pointerEvents: "none",
+                  userSelect: "none",
                 }}
               />
             </div>
