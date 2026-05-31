@@ -103,8 +103,6 @@ export function ObsidianBrainSection() {
                 position: "relative",
                 overflow: "hidden",
               }}>
-                {/* Quando tiver o vídeo: descomente e remova o emoji */}
-                {/*
                 <video
                   src="/videos/cerebro-obsidian.mp4"
                   autoPlay loop muted playsInline
@@ -114,8 +112,6 @@ export function ObsidianBrainSection() {
                     position: "absolute", inset: 0,
                   }}
                 />
-                */}
-                <span style={{ position: "relative", zIndex: 1 }}>🧠</span>
                 <div style={{
                   position: "absolute", inset: 0,
                   background: "radial-gradient(circle at 30% 30%, rgba(168,85,247,0.3), transparent 60%)",
