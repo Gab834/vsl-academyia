@@ -1,14 +1,27 @@
 "use client"
 import { useEffect, useState } from "react"
 
-const TARGET_DATE = new Date("2026-06-07T23:59:00")
+const SESSION_KEY = "academyia_offer_deadline"
+const DURATION_MS = 24 * 60 * 60 * 1000 // 24 horas por sessão
 
 function pad(n: number) {
   return String(n).padStart(2, "0")
 }
 
-function getTimeLeft() {
-  const diff = TARGET_DATE.getTime() - Date.now()
+function getOrCreateDeadline(): number {
+  if (typeof window === "undefined") return Date.now() + DURATION_MS
+  const stored = sessionStorage.getItem(SESSION_KEY)
+  if (stored) {
+    const deadline = parseInt(stored, 10)
+    if (deadline > Date.now()) return deadline
+  }
+  const deadline = Date.now() + DURATION_MS
+  sessionStorage.setItem(SESSION_KEY, String(deadline))
+  return deadline
+}
+
+function getTimeLeft(deadline: number) {
+  const diff = deadline - Date.now()
   if (diff <= 0) return { d: "00", h: "00", m: "00", s: "00" }
   const d = Math.floor(diff / 86400000)
   const h = Math.floor((diff % 86400000) / 3600000)
@@ -23,8 +36,9 @@ export function CountdownTimer() {
   const [time, setTime] = useState(PLACEHOLDER)
 
   useEffect(() => {
-    setTime(getTimeLeft())
-    const id = setInterval(() => setTime(getTimeLeft()), 1000)
+    const deadline = getOrCreateDeadline()
+    setTime(getTimeLeft(deadline))
+    const id = setInterval(() => setTime(getTimeLeft(deadline)), 1000)
     return () => clearInterval(id)
   }, [])
 

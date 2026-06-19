@@ -72,7 +72,7 @@ export function PricingSection() {
                 Valor normal
               </span>
               <span style={{ fontSize: 22, color: "rgba(238,238,245,0.35)", textDecoration: "line-through", fontWeight: 600 }}>
-                R$497,90
+                R$997,90
               </span>
             </div>
             <div style={{
@@ -80,14 +80,14 @@ export function PricingSection() {
               borderRadius: 8, padding: "4px 10px",
               fontSize: 11, fontWeight: 700, color: "#4060E8", letterSpacing: "0.06em",
             }}>
-              -80% OFF
+              -50% OFF
             </div>
           </div>
 
           {/* Main price */}
           <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 8 }}>
             <span style={{ fontSize: 20, fontWeight: 600, color: "rgba(238,238,245,0.7)" }}>R$</span>
-            <span className="pricing-price" style={{ fontSize: 80, fontWeight: 800, color: "#EEEEF5", letterSpacing: "-4px", lineHeight: 1 }}>97</span>
+            <span className="pricing-price" style={{ fontSize: 80, fontWeight: 800, color: "#EEEEF5", letterSpacing: "-4px", lineHeight: 1 }}>497,90</span>
             <span style={{ fontSize: 16, color: "rgba(238,238,245,0.4)", alignSelf: "flex-end", paddingBottom: 12 }}>único</span>
           </div>
 
@@ -104,7 +104,7 @@ export function PricingSection() {
               <path d="M2 10h20" stroke="#4060E8" strokeWidth="1.8"/>
             </svg>
             <span style={{ fontSize: 14, color: "rgba(238,238,245,0.65)", fontWeight: 500 }}>
-              ou <strong style={{ color: "#EEEEF5" }}>12x de R$10,12</strong> no cartão de crédito
+              ou <strong style={{ color: "#EEEEF5" }}>12x de R$41,49</strong> no cartão de crédito
             </span>
           </div>
 
