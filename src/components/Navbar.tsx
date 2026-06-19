@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 
-const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
+const CAKTO = "https://pay.cakto.com.br/34aija3"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)

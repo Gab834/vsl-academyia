@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 
-const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
+const CAKTO = "https://pay.cakto.com.br/34aija3"
 
 
 export function HeroSection() {

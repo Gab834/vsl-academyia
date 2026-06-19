@@ -1,6 +1,6 @@
 "use client"
 
-const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
+const CAKTO = "https://pay.cakto.com.br/34aija3"
 
 export function FooterCTA() {
   return (

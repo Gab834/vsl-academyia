@@ -223,7 +223,7 @@ export function AgentSection() {
         {/* CTA */}
         <div style={{ textAlign: "center" }}>
           <a
-            href="https://pay.cakto.com.br/32tatyi_883478"
+            href="https://pay.cakto.com.br/34aija3"
             target="_blank"
             rel="noopener noreferrer"
             style={{
