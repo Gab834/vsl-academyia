@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { CountdownTimer } from "./CountdownTimer"
 
-const CAKTO = "https://pay.cakto.com.br/32tatyi_883478"
+const CAKTO = "https://pay.cakto.com.br/34aija3"
 
 const features = [
   "Todos os meus funis de low ticket que faturaram +R$50k",
@@ -104,7 +104,7 @@ export function PricingSection() {
               <path d="M2 10h20" stroke="#4060E8" strokeWidth="1.8"/>
             </svg>
             <span style={{ fontSize: 14, color: "rgba(238,238,245,0.65)", fontWeight: 500 }}>
-              ou <strong style={{ color: "#EEEEF5" }}>12x de R$41,49</strong> no cartão de crédito
+              ou <strong style={{ color: "#EEEEF5" }}>12x de R$51,43</strong> no cartão de crédito
             </span>
           </div>
 

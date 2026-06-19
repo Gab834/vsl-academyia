@@ -247,7 +247,7 @@ export function AgentSection() {
             🤖 Quero criar meu agente agora →
           </a>
           <p style={{ fontSize: 13, color: "rgba(238,238,245,0.35)", marginTop: 12 }}>
-            Acesso vitalício · R$97 de investimento único
+            Acesso vitalício · R$497,90 de investimento único
           </p>
         </div>
       </div>

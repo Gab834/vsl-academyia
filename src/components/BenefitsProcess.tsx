@@ -35,7 +35,7 @@ const features = [
 ]
 
 const steps = [
-  { num: "01", text: "Clique no botão, faça o pagamento único de R$97 e receba acesso imediato no seu email." },
+  { num: "01", text: "Clique no botão, faça o pagamento único de R$497,90 e receba acesso imediato no seu email." },
   { num: "02", text: "Faça login na plataforma e explore as aulas, skills e recursos organizados por categoria." },
   { num: "03", text: "Coloque em prática com as skills prontas e tire dúvidas na comunidade com outros membros." },
   { num: "04", text: "Acesse para sempre — sem mensalidade, sem prazo. Novos conteúdos adicionados toda semana." },
