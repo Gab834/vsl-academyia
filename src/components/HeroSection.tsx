@@ -63,15 +63,13 @@ export function HeroSection() {
         <h1 style={{
           fontSize: "clamp(30px, 4vw, 52px)",
           fontWeight: 700,
-          lineHeight: 1.06,
+          lineHeight: 1.1,
           letterSpacing: "-0.04em",
-          background: "linear-gradient(135deg, #EEEEF5 40%, rgba(238,238,245,0.5))",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
+          color: "#EEEEF5",
           maxWidth: 780,
           margin: "0 auto 20px",
-        }}>
+          textWrap: "balance",
+        } as React.CSSProperties}>
           Aprenda a construir com IA — e pare de perder tempo assistindo tutorial que não aplica
         </h1>
 

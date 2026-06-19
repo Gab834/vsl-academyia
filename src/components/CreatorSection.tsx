@@ -86,8 +86,7 @@ export function CreatorSection() {
             <h2 style={{
               fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700,
               letterSpacing: "-0.04em", lineHeight: 1.1,
-              background: "linear-gradient(135deg, #EEEEF5 50%, rgba(238,238,245,0.4))",
-              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+              color: "#EEEEF5",
               marginBottom: 8,
             }}>
               Gabriel de Almeida
@@ -118,9 +117,8 @@ export function CreatorSection() {
             <div style={{
               marginTop: 32,
               background: "rgba(64,96,232,0.08)",
-              border: "1px solid rgba(64,96,232,0.25)",
-              borderLeft: "3px solid #4060E8",
-              borderRadius: "0 14px 14px 0",
+              border: "1px solid rgba(64,96,232,0.3)",
+              borderRadius: 14,
               padding: "18px 24px",
             }}>
               <p style={{ fontSize: 16, fontWeight: 600, color: "#EEEEF5", margin: 0, lineHeight: 1.6 }}>

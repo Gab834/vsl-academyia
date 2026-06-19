@@ -57,8 +57,7 @@ export function BenefitsProcess() {
           </div>
           <h2 style={{
             fontSize: "clamp(36px, 4vw, 60px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.1,
-            background: "linear-gradient(135deg, #EEEEF5 50%, rgba(238,238,245,0.4))",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+            color: "#EEEEF5",
             marginBottom: 16, maxWidth: 700,
           }}>
             Tudo que você precisa para dominar a IA
@@ -116,8 +115,7 @@ export function BenefitsProcess() {
             </div>
             <h2 style={{
               fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.1,
-              background: "linear-gradient(135deg, #EEEEF5 50%, rgba(238,238,245,0.4))",
-              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+              color: "#EEEEF5",
             }}>
               Simples assim
             </h2>
